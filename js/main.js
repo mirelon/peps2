@@ -3,7 +3,7 @@ function showOnly(id) {
     $('.menuitem').each(function(i,e){
       let key = [$(e).attr('subtest'), localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
       $(e).toggleClass('done', localStorage[key] !== undefined);
-    })
+    });
     $('#menu').show();
   } else {
     $('#menu').hide();
@@ -208,7 +208,7 @@ function g() {
     const oznam = [1,2,4,5,8,9,12,13,16,17].includes(i);
     console.log(oznam);
     console.log(key);
-    const correct = (key==1 && oznam) || (key==2 && !oznam);
+    const correct = (key===1 && oznam) || (key===2 && !oznam);
     if (!items[i].practice && !items[i].example && correct) {
       body += 1;
     }
@@ -219,7 +219,7 @@ function g() {
     } else {
       finish();
     }
-  }
+  };
 
   start();
 
@@ -316,7 +316,7 @@ function i() {
   let result = {
     tester: null,
     client: null
-  }
+  };
 
   const items = [
     {'item': 'tea', 'example': true},
@@ -368,7 +368,7 @@ function i() {
     keyPressed = function(key) {
       result.tester = key;
       judge();
-    }
+    };
     showOnly('splitscreen');
   }
 
@@ -389,7 +389,7 @@ function i() {
   function judge() {
     if (result.tester !== null && result.client !== null) {
       console.log(result.tester, result.client);
-      const correct = result.tester == result.client;
+      const correct = result.tester === result.client;
       if (!items[i].practice && !items[i].example && correct) {
         body += 1;
       }
@@ -397,7 +397,7 @@ function i() {
       result = {
         tester: null,
         client: null
-      }
+      };
       debugMessage(i, correct, body);
       i += 1;
       if (items[i]) {
@@ -458,7 +458,7 @@ function p() {
 
   function finish() {
     ulozBody('P', body);
-    commonFinish()
+    commonFinish();
   }
 
   function start() {
@@ -553,7 +553,7 @@ function q() {
     // 1,2,4,6,8,10,12,14,16,18 - farba(1)
     // 0,3,5,7,9,11,13,15,17,19 - zviera(2)
     const farba = [1,2,4,6,8,10,12,14,16,18].includes(i);
-    const correct = (key == 1 && farba) || (key == 2 && !farba)
+    const correct = (key === 1 && farba) || (key === 2 && !farba);
     if (!items[i].practice && !items[i].example && correct) {
       body += 1;
     }
@@ -564,7 +564,7 @@ function q() {
     } else {
       finish();
     }
-  }
+  };
 
   start();
 
@@ -614,26 +614,26 @@ document.onkeydown = function(evt) {
 $('#meno').keyup(function(){
   localStorage.meno = this.value;
   showOnly('menu');
-})
+});
 $('#priezvisko').keyup(function(){
   localStorage.priezvisko = this.value;
   showOnly('menu');
-})
+});
 $('#rodnecislo').keyup(function(){
   localStorage.rodnecislo = this.value;
   showOnly('menu');
-})
-$('input[name=pohlavie]').change(function(e){
+});
+$('input[name=pohlavie]').change(function(){
   localStorage.pohlavie = this.id;
   showOnly('menu');
-})
+});
 $('#vysledkybutton').click(function(){
   let rows = {};
   for (const key in localStorage) {
     const fields = key.split('_');
     if (fields.length === 5) {
       const client = fields.slice(1).join('_');
-      rows[client] = rows[client] || {}
+      rows[client] = rows[client] || {};
       rows[client][fields[0]] = localStorage[key];
     }
   }
@@ -648,7 +648,7 @@ $('#vysledkybutton').click(function(){
 
   $('#vysledky table tbody').html(html);
   $('#vysledky').toggle();
-})
+});
 
 function vysledokHtml(vysledky, subtest) {
   return '<td>' + (vysledky[subtest] || '') + '</td>';
