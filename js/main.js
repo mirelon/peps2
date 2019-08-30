@@ -18,7 +18,7 @@ function showOnly(id) {
   } else {
     $('#splitscreen').hide();
   }
-
+  $('#vysledky').hide();
 }
 
 function sklonujBody(body) {
@@ -34,13 +34,14 @@ function debugMessage(i, correct, body) {
 }
 
 function isCorrect(item, guess, pridajBody) {
+  console.log(item.correct, guess);
   if(item.correct === guess) {
     if (!item.practice && !item.example) {
       pridajBody();
-      return true;
-    } else {
-      return false;
     }
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -60,7 +61,7 @@ function commonFinish() {
   $('#splitleft').unbind('click');
   $('#splitright').unbind('click');
   key1 = function (){};
-  key0 = function (){};
+  key2 = function (){};
   clearTimeout(currentTimeout);
   showOnly('menu');
 }
@@ -71,7 +72,9 @@ function ulozBody(subtest, body) {
 }
 
 let key1 = function (){};
-let key0 = function (){};
+let key2 = function (){};
+
+let keyPressed = function(){};
 
 function f() {
 
@@ -95,7 +98,7 @@ function f() {
     {'item': 'kecup',     'sound': 'kecup',     'correct': 'q'},
     {'item': 'hrasok',    'sound': 'hrasok',    'correct': 'q'},
     {'item': 'eggs',      'sound': 'vajicka',   'correct': ''},
-    {'item': 'pivo',      'sound': 'pivo',      'correct': ''},
+    {'item': 'pivo',      'sound': 'pivo',      'correct': 'q'},
     {'item': 'paradajky', 'sound': 'paradajky', 'correct': 'q'},
     {'item': 'mushrooms', 'sound': 'hriby',     'correct': ''},
     {'item': 'raisins',   'sound': 'hrozienka', 'correct': ''}
@@ -199,18 +202,16 @@ function g() {
     showItem(i);
   }
 
-  key1 = function() {
-    if (!items[i].practice && !items[i].example) {
+  keyPressed = function(key) {
+    // 1,2,4,5,8,9,12,13 - oznam
+    // 0,3,6,7,10,11,14,15 - otazka
+    const oznam = [1,2,4,5,8,9,12,13,16,17].includes(i);
+    console.log(oznam);
+    console.log(key);
+    const correct = (key==1 && oznam) || (key==2 && !oznam);
+    if (!items[i].practice && !items[i].example && correct) {
       body += 1;
     }
-    keyPressed(true);
-  }
-
-  key0 = function() {
-    keyPressed(false);
-  }
-
-  function keyPressed(correct) {
     debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
@@ -312,6 +313,10 @@ function i() {
 
   let i = 0;
   let body = 0;
+  let result = {
+    tester: null,
+    client: null
+  }
 
   const items = [
     {'item': 'tea', 'example': true},
@@ -352,6 +357,18 @@ function i() {
   function showLikeOrNot() {
     $('#leftimg').attr('src', 'img/likes.bmp');
     $('#rightimg').attr('src', 'img/doesnt.bmp');
+    $('#splitleft').unbind('click').click(function(){
+      console.log('#splitleft click');
+      sideClicked(1);
+    });
+    $('#splitright').unbind('click').click(function(){
+      console.log('#splitright click');
+      sideClicked(2);
+    });
+    keyPressed = function(key) {
+      result.tester = key;
+      judge();
+    }
     showOnly('splitscreen');
   }
 
@@ -364,24 +381,30 @@ function i() {
     showItem(i);
   }
 
-  key1 = function() {
-    if (!items[i].practice && !items[i].example) {
-      body += 1;
-    }
-    keyPressed(true);
+  function sideClicked(side) {
+    result.client = side;
+    judge();
   }
 
-  key0 = function() {
-    keyPressed(false);
-  }
-
-  function keyPressed(correct) {
-    debugMessage(i, correct, body);
-    i += 1;
-    if (items[i]) {
-      showItem(i);
-    } else {
-      finish();
+  function judge() {
+    if (result.tester !== null && result.client !== null) {
+      console.log(result.tester, result.client);
+      const correct = result.tester == result.client;
+      if (!items[i].practice && !items[i].example && correct) {
+        body += 1;
+      }
+      keyPressed = function(){};
+      result = {
+        tester: null,
+        client: null
+      }
+      debugMessage(i, correct, body);
+      i += 1;
+      if (items[i]) {
+        showItem(i);
+      } else {
+        finish();
+      }
     }
   }
 
@@ -526,18 +549,14 @@ function q() {
     showOnly('fullscreen');
   }
 
-  key1 = function() {
-    if (!items[i].practice && !items[i].example) {
+  keyPressed = function(key) {
+    // 1,2,4,6,8,10,12,14,16,18 - farba(1)
+    // 0,3,5,7,9,11,13,15,17,19 - zviera(2)
+    const farba = [1,2,4,6,8,10,12,14,16,18].includes(i);
+    const correct = (key == 1 && farba) || (key == 2 && !farba)
+    if (!items[i].practice && !items[i].example && correct) {
       body += 1;
     }
-    keyPressed(true);
-  }
-
-  key0 = function() {
-    keyPressed(false);
-  }
-
-  function keyPressed(correct) {
     debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
@@ -566,24 +585,29 @@ $(document).ready(function(){
 
 document.onkeydown = function(evt) {
   evt = evt || window.event;
-  let isEscape = false, isOne = false, isZero = false;
+  let isEscape = false, isOne = false, isTwo = false, isThree = false;
   if ("key" in evt) {
     isEscape = (["Escape", "Esc"].includes(evt.key));
     isOne = (["1", "+", "!"].includes(evt.key));
-    isZero = (["0", "é", ")"].includes(evt.key));
+    isTwo = (["2", "ľ", "@"].includes(evt.key));
+    isThree = (["3", "š", "#"].includes(evt.key));
   } else {
     isEscape = (evt.keyCode === 27);
     isOne = ([49, 97].includes(evt.keyCode));
-    isZero = ([48, 96].includes(evt.keyCode));
+    isTwo = ([50, 98].includes(evt.keyCode));
+    isThree = ([51, 99].includes(evt.keyCode));
   }
   if (isEscape) {
     commonFinish();
   }
   if (isOne) {
-    key1();
+    keyPressed(1);
   }
-  if (isZero) {
-    key0();
+  if (isTwo) {
+    keyPressed(2);
+  }
+  if (isThree) {
+    keyPressed(3);
   }
 };
 
