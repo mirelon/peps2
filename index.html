@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <div id="menu">
+    <table cellpadding="10" align="center">
+      <thead><tr><th colspan="2">
+        <input type="text" id="meno" placeholder="Meno" autofocus />
+        <input type="text" id="priezvisko" placeholder="Priezvisko" />
+        <input type="text" id="rodnecislo" placeholder="Rodné číslo" />
+        <input type="radio" id="muz" name="pohlavie" type="radio" />M
+        <input type="radio" id="zena" name="pohlavie" />F
+      </th></th></tr></thead>
+      <tbody>
+      <tr><th colspan="2">Turn-end</th></tr>
+      <tr>
+        <td class="menuitem" subtest="F" onclick="f()"><h2>F</h2>(understanding - čašník)</td>
+        <td class="menuitem" subtest="G" onclick="g()"><h2>G</h2> (expression - čašník)</td></tr>
+      <tr><th colspan="2">Affect</th></tr>
+      <tr>
+        <td class="menuitem" subtest="H" onclick="h()"><h2>H</h2> (understanding - čo mám rada?)</td>
+        <td class="menuitem" subtest="I" onclick="i()"><h2>I</h2> (expression - čo máš rád?)</td></tr>
+      <tr><th colspan="2">Contrastive stress</th></tr>
+      <tr>
+        <td class="menuitem" subtest="P" onclick="p()"><h2>P</h2> (understanding - ponožky)</td>
+        <td class="menuitem" subtest="Q" onclick="q()"><h2>Q</h2> (expression - kravy)</td></tr>
+      <tr><td id="vysledkybutton">Výsledky</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="fullscreen">
+    <div class="centered">
+      <img id="centerimg" src="img/loader.gif">
+    </div>
+  </div>
+  <div id="splitscreen">
+    <div class="split left" id="splitleft">
+      <div class="centered">
+        <img id="leftimg" src="img/loader.gif">
+      </div>
+    </div>
+    <div class="split right" id="splitright">
+      <div class="centered">
+        <img id="rightimg" src="img/loader.gif">
+      </div>
+    </div>
+  </div>
+  <div id="vysledky" style="display: none;">
+    <table border="1" cellpadding="4" cellspacing="0">
+      <thead><tr><th>Rodné číslo</th><th>Meno</th><th>Priezvisko</th><th>Pohlavie</th><th>F</th><th>G</th><th>H</th><th>I</th><th>P</th><th>Q</th></tr></thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
