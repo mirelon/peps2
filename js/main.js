@@ -60,9 +60,8 @@ function commonFinish() {
   $('#fullscreen').unbind('click');
   $('#splitleft').unbind('click');
   $('#splitright').unbind('click');
-  key1 = function (){};
-  key2 = function (){};
   clearTimeout(currentTimeout);
+  keyPressed = function(){};
   showOnly('menu');
 }
 
@@ -70,9 +69,6 @@ function ulozBody(subtest, body) {
   const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
   localStorage[key] = body;
 }
-
-let key1 = function (){};
-let key2 = function (){};
 
 let keyPressed = function(){};
 
