@@ -622,8 +622,10 @@ document.onkeydown = function(evt) {
     commonFinish();
   }
   if (isBackspace) {
-    currentTask -= 1;
-    showItem();
+    if (currentTask > 0) {
+      currentTask -= 1;
+      showItem();
+    }
   }
   if (isOne) {
     keyPressed(1);
