@@ -62,6 +62,7 @@ function commonFinish() {
   $('#splitright').unbind('click');
   clearTimeout(currentTimeout);
   keyPressed = function(){};
+  showItem = function(){};
   showOnly('menu');
 }
 
@@ -77,9 +78,13 @@ function ulozBodyPreUlohu(subtest, uloha, body) {
 
 let keyPressed = function(){};
 
+let showItem = function(){};
+
+let currentTask = 0;
+
 function f() {
 
-  let i = 0;
+  currentTask = 0;
   let body = 0;
 
   const items = [
@@ -117,10 +122,10 @@ function f() {
     return 'sounds/SB' + correct + snd + '.wav';
   }
 
-  function showItem(i) {
-    $('#leftimg').attr('src', imageLeft(items[i].item));
-    $('#rightimg').attr('src', imageRight(items[i].item));
-    new Audio(sound(items[i].sound, items[i].correct)).play();
+  showItem = function() {
+    $('#leftimg').attr('src', imageLeft(items[currentTask].item));
+    $('#rightimg').attr('src', imageRight(items[currentTask].item));
+    new Audio(sound(items[currentTask].sound, items[currentTask].correct)).play();
     showOnly('splitscreen');
     // setTimeout(function(){}, timeout['f']);
   }
@@ -131,7 +136,7 @@ function f() {
   }
 
   function start() {
-    showItem(i);
+    showItem(currentTask);
   }
 
   $('#splitleft').unbind('click').click(function(){
@@ -144,12 +149,12 @@ function f() {
   });
 
   function sideClicked(side) {
-    const correct = isCorrect(items[i], side, function(){body += 1;});
-    ulozBodyPreUlohu('F', i, correct ? 1 : 0);
-    debugMessage(i, correct, body);
-    i += 1;
-    if (items[i]) {
-      showItem(i);
+    const correct = isCorrect(items[currentTask], side, function(){body += 1;});
+    ulozBodyPreUlohu('F', currentTask, correct ? 1 : 0);
+    debugMessage(currentTask, correct, body);
+    currentTask += 1;
+    if (items[currentTask]) {
+      showItem(currentTask);
     } else {
       finish();
     }
@@ -161,7 +166,7 @@ function f() {
 
 function g() {
 
-  let i = 0;
+  currentTask = 0;
   let body = 0;
 
   const items = [
@@ -191,8 +196,8 @@ function g() {
     return 'img/' + item + '.bmp';
   }
 
-  function showItem(i) {
-    $('#centerimg').attr('src', image(items[i].item));
+  showItem = function() {
+    $('#centerimg').attr('src', image(items[currentTask].item));
     showOnly('fullscreen');
   }
 
@@ -202,24 +207,24 @@ function g() {
   }
 
   function start() {
-    showItem(i);
+    showItem(currentTask);
   }
 
   keyPressed = function(key) {
     // 1,2,4,5,8,9,12,13 - oznam
     // 0,3,6,7,10,11,14,15 - otazka
-    const oznam = [1,2,4,5,8,9,12,13,16,17].includes(i);
+    const oznam = [1,2,4,5,8,9,12,13,16,17].includes(currentTask);
     console.log(oznam);
     console.log(key);
     const correct = (key===1 && oznam) || (key===2 && !oznam);
-    if (!items[i].practice && !items[i].example && correct) {
+    if (!items[currentTask].practice && !items[currentTask].example && correct) {
       body += 1;
     }
-    ulozBodyPreUlohu('G', i, correct ? 1 : 0)
-    debugMessage(i, correct, body);
-    i += 1;
-    if (items[i]) {
-      showItem(i);
+    ulozBodyPreUlohu('G', currentTask, correct ? 1 : 0)
+    debugMessage(currentTask, correct, body);
+    currentTask += 1;
+    if (items[currentTask]) {
+      showItem(currentTask);
     } else {
       finish();
     }
@@ -231,7 +236,7 @@ function g() {
 
 function h() {
 
-  let i = 0;
+  currentTask = 0;
   let body = 0;
 
   const items = [
@@ -268,10 +273,10 @@ function h() {
     return 'sounds/SB' + item + (correct === 'L' ? '^' : '~') +'.wav';
   }
 
-  function showItem(i) {
-    $('#centerimg').attr('src', image(items[i].item));
+  showItem = function() {
+    $('#centerimg').attr('src', image(items[currentTask].item));
     showOnly('fullscreen');
-    new Audio(sound(items[i].item, items[i].correct)).play();
+    new Audio(sound(items[currentTask].item, items[currentTask].correct)).play();
     currentTimeout = setTimeout(showLikeOrNot, timeout['h']);
   }
 
@@ -287,7 +292,7 @@ function h() {
   }
 
   function start() {
-    showItem(i);
+    showItem(currentTask);
   }
 
   $('#splitleft').click(function(){
@@ -300,12 +305,12 @@ function h() {
   });
 
   function sideClicked(side) {
-    const correct = isCorrect(items[i], side, function(){body += 1;});
-    ulozBodyPreUlohu('H', i, correct ? 1 : 0);
-    debugMessage(i, correct, body);
-    i += 1;
-    if (items[i]) {
-      showItem(i);
+    const correct = isCorrect(items[currentTask], side, function(){body += 1;});
+    ulozBodyPreUlohu('H', currentTask, correct ? 1 : 0);
+    debugMessage(currentTask, correct, body);
+    currentTask += 1;
+    if (items[currentTask]) {
+      showItem(currentTask);
     } else {
       finish();
     }
@@ -317,7 +322,7 @@ function h() {
 
 function i() {
 
-  let i = 0;
+  currentTask = 0;
   let body = 0;
   let result = {
     tester: null,
@@ -354,8 +359,8 @@ function i() {
     return 'img/' + item + '.bmp';
   }
 
-  function showItem(i) {
-    $('#centerimg').attr('src', image(items[i].item));
+  showItem = function() {
+    $('#centerimg').attr('src', image(items[currentTask].item));
     $('#fullscreen').click(showLikeOrNot);
     showOnly('fullscreen');
   }
@@ -384,7 +389,7 @@ function i() {
   }
 
   function start() {
-    showItem(i);
+    showItem(currentTask);
   }
 
   function sideClicked(side) {
@@ -396,7 +401,7 @@ function i() {
     if (result.tester !== null && result.client !== null) {
       console.log(result.tester, result.client);
       const correct = result.tester === result.client;
-      if (!items[i].practice && !items[i].example && correct) {
+      if (!items[currentTask].practice && !items[currentTask].example && correct) {
         body += 1;
       }
       keyPressed = function(){};
@@ -404,11 +409,11 @@ function i() {
         tester: null,
         client: null
       };
-      ulozBodyPreUlohu('I', i, correct ? 1 : 0);
-      debugMessage(i, correct, body);
-      i += 1;
-      if (items[i]) {
-        showItem(i);
+      ulozBodyPreUlohu('I', currentTask, correct ? 1 : 0);
+      debugMessage(currentTask, correct, body);
+      currentTask += 1;
+      if (items[currentTask]) {
+        showItem(currentTask);
       } else {
         finish();
       }
@@ -421,7 +426,7 @@ function i() {
 
 function p() {
 
-  let i = 0;
+  currentTask = 0;
   let body = 0;
 
   const items = [
@@ -455,10 +460,10 @@ function p() {
     return 'sounds/SB' + item + '.wav';
   }
 
-  function showItem(i) {
-    $('#leftimg').attr('src', image(items[i].left));
-    $('#rightimg').attr('src', image(items[i].right));
-    new Audio(sound(items[i].sound)).play();
+  showItem = function() {
+    $('#leftimg').attr('src', image(items[currentTask].left));
+    $('#rightimg').attr('src', image(items[currentTask].right));
+    new Audio(sound(items[currentTask].sound)).play();
     showOnly('splitscreen');
     // setTimeout(function(){}, timeout['p']);
   }
@@ -469,7 +474,7 @@ function p() {
   }
 
   function start() {
-    showItem(i);
+    showItem(currentTask);
   }
 
   $('#splitleft').unbind('click').click(function(){
@@ -482,12 +487,12 @@ function p() {
   });
 
   function sideClicked(side) {
-    let correct = isCorrect(items[i], side, function(){body += 1;});
-    ulozBodyPreUlohu('P', i, correct);
-    debugMessage(i, correct, body);
-    i += 1;
-    if (items[i]) {
-      showItem(i);
+    let correct = isCorrect(items[currentTask], side, function(){body += 1;});
+    ulozBodyPreUlohu('P', currentTask, correct);
+    debugMessage(currentTask, correct, body);
+    currentTask += 1;
+    if (items[currentTask]) {
+      showItem(currentTask);
     } else {
       finish();
     }
@@ -499,7 +504,7 @@ function p() {
 
 function q() {
 
-  let i = 0;
+  currentTask = 0;
   let body = 0;
 
   const items = [
@@ -536,9 +541,9 @@ function q() {
     return 'sounds/SB' + item + '.wav';
   }
 
-  function showItem(i) {
-    $('#centerimg').attr('src', image(items[i].item));
-    new Audio(sound(items[i].sound)).play();
+  showItem = function() {
+    $('#centerimg').attr('src', image(items[currentTask].item));
+    new Audio(sound(items[currentTask].sound)).play();
     showOnly('fullscreen');
   }
 
@@ -557,7 +562,7 @@ function q() {
     introSheep.play();
     $('#fullscreen').click(function() {
       $('#fullscreen').unbind('click');
-      showItem(i);
+      showItem(currentTask);
     });
     showOnly('fullscreen');
   }
@@ -565,16 +570,16 @@ function q() {
   keyPressed = function(key) {
     // 1,2,4,6,8,10,12,14,16,18 - farba(1)
     // 0,3,5,7,9,11,13,15,17,19 - zviera(2)
-    const farba = [1,2,4,6,8,10,12,14,16,18].includes(i);
+    const farba = [1,2,4,6,8,10,12,14,16,18].includes(currentTask);
     const correct = (key === 1 && farba) || (key === 2 && !farba);
-    if (!items[i].practice && !items[i].example && correct) {
+    if (!items[currentTask].practice && !items[currentTask].example && correct) {
       body += 1;
     }
-    ulozBodyPreUlohu('Q', i, correct ? 1 : 0);
-    debugMessage(i, correct, body);
-    i += 1;
-    if (items[i]) {
-      showItem(i);
+    ulozBodyPreUlohu('Q', currentTask, correct ? 1 : 0);
+    debugMessage(currentTask, correct, body);
+    currentTask += 1;
+    if (items[currentTask]) {
+      showItem(currentTask);
     } else {
       finish();
     }
@@ -599,20 +604,26 @@ $(document).ready(function(){
 
 document.onkeydown = function(evt) {
   evt = evt || window.event;
-  let isEscape = false, isOne = false, isTwo = false, isThree = false;
+  let isEscape = false, isBackspace = false, isOne = false, isTwo = false, isThree = false;
   if ("key" in evt) {
     isEscape = (["Escape", "Esc"].includes(evt.key));
+    isBackspace = (["Backspace"].includes(evt.key));
     isOne = (["1", "+", "!"].includes(evt.key));
     isTwo = (["2", "ľ", "@"].includes(evt.key));
     isThree = (["3", "š", "#"].includes(evt.key));
   } else {
     isEscape = (evt.keyCode === 27);
+    isBackspace = (evt.keyCode === 8);
     isOne = ([49, 97].includes(evt.keyCode));
     isTwo = ([50, 98].includes(evt.keyCode));
     isThree = ([51, 99].includes(evt.keyCode));
   }
   if (isEscape) {
     commonFinish();
+  }
+  if (isBackspace) {
+    currentTask -= 1;
+    showItem();
   }
   if (isOne) {
     keyPressed(1);
