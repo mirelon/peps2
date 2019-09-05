@@ -81,7 +81,7 @@ let keyPressed = function(){};
 
 let showItem = function(){};
 
-let url = 'http://localhost:3000/api/performance';
+let url = 'http://192.168.22.102:3000/api/performance';
 
 let currentTask = 0;
 
