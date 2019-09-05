@@ -69,6 +69,7 @@ function commonFinish() {
 function ulozBody(subtest, body) {
   const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
   localStorage[key] = body + "_" + currentDate();
+  $('#uploadbutton').css('background-color', '');
 }
 
 function ulozBodyPreUlohu(subtest, uloha, body) {
@@ -79,6 +80,8 @@ function ulozBodyPreUlohu(subtest, uloha, body) {
 let keyPressed = function(){};
 
 let showItem = function(){};
+
+let url = 'http://localhost:3000/api/performance';
 
 let currentTask = 0;
 
@@ -680,6 +683,20 @@ $('#vysledkybutton').click(function(){
 function vysledokHtml(vysledky, subtest) {
   return '<td>' + (vysledky[subtest] || '') + '</td>';
 }
+
+$('#uploadbutton').click(function(){
+  console.log('Uploading localStorage to ' + url);
+  fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(localStorage)
+  }).then(function(){
+    $('#uploadbutton').css('background-color', 'greenyellow');
+  });
+});
 
 function currentDate() {
   const date = new Date();
