@@ -81,7 +81,7 @@ let keyPressed = function(){};
 
 let showItem = function(){};
 
-let url = 'http://192.168.22.102:3000/api/performance';
+let baseUrl = 'http://192.168.22.102:3000/';
 
 let currentTask = 0;
 
@@ -685,6 +685,7 @@ function vysledokHtml(vysledky, subtest) {
 }
 
 $('#uploadbutton').click(function(){
+  const url = baseUrl + 'api/performance';
   console.log('Uploading localStorage to ' + url);
   fetch(url, {
     method: 'POST',
@@ -695,6 +696,18 @@ $('#uploadbutton').click(function(){
     body: JSON.stringify(localStorage)
   }).then(function(){
     $('#uploadbutton').css('background-color', 'greenyellow');
+  });
+});
+
+$('#downloadbutton').click(function(){
+  const url = baseUrl + 'api/download_performances';
+  console.log('Downloading localStorage from ' + url);
+  fetch(url).then(r => r.json()).then(function(json) {
+    for (let key in json) {
+      console.log(key, json[key]);
+      localStorage.setItem(key, json[key]);
+    }
+    $('#downloadbutton').css('background-color', 'greenyellow');
   });
 });
 

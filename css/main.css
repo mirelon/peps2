@@ -89,6 +89,12 @@ input#rodnecislo {
   /*width: 150px;*/
 }
 
+.buttons span {
+  padding: 7px;
+  background-color: #cccccc;
+  cursor: pointer;
+}
+
 
 html {
   color: #222;
