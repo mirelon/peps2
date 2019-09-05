@@ -553,7 +553,7 @@ function q() {
     new Audio('sounds/sheep.wav').play();
     $('#fullscreen').click(function() {
       $('#fullscreen').unbind('click');
-      showItem(1);
+      showItem(i);
     });
     showOnly('fullscreen');
   }
