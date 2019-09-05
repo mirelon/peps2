@@ -70,6 +70,11 @@ function ulozBody(subtest, body) {
   localStorage[key] = body;
 }
 
+function ulozBodyPreUlohu(subtest, uloha, body) {
+  const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, uloha].join('_');
+  localStorage[key] = body;
+}
+
 let keyPressed = function(){};
 
 function f() {
@@ -139,7 +144,9 @@ function f() {
   });
 
   function sideClicked(side) {
-    debugMessage(i, isCorrect(items[i], side, function(){body += 1;}), body);
+    const correct = isCorrect(items[i], side, function(){body += 1;});
+    ulozBodyPreUlohu('F', i, correct ? 1 : 0);
+    debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
       showItem(i);
@@ -208,6 +215,7 @@ function g() {
     if (!items[i].practice && !items[i].example && correct) {
       body += 1;
     }
+    ulozBodyPreUlohu('G', i, correct ? 1 : 0)
     debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
@@ -292,7 +300,9 @@ function h() {
   });
 
   function sideClicked(side) {
-    debugMessage(i, isCorrect(items[i], side, function(){body += 1;}), body);
+    const correct = isCorrect(items[i], side, function(){body += 1;});
+    ulozBodyPreUlohu('H', i, correct ? 1 : 0);
+    debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
       showItem(i);
@@ -394,6 +404,7 @@ function i() {
         tester: null,
         client: null
       };
+      ulozBodyPreUlohu('I', i, correct ? 1 : 0);
       debugMessage(i, correct, body);
       i += 1;
       if (items[i]) {
@@ -471,7 +482,9 @@ function p() {
   });
 
   function sideClicked(side) {
-    debugMessage(i, isCorrect(items[i], side, function(){body += 1;}), body);
+    let correct = isCorrect(items[i], side, function(){body += 1;});
+    ulozBodyPreUlohu('P', i, correct);
+    debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
       showItem(i);
@@ -553,6 +566,7 @@ function q() {
     if (!items[i].practice && !items[i].example && correct) {
       body += 1;
     }
+    ulozBodyPreUlohu('Q', i, correct ? 1 : 0);
     debugMessage(i, correct, body);
     i += 1;
     if (items[i]) {
