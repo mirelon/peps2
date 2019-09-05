@@ -549,8 +549,12 @@ function q() {
 
   function start() {
     $('#centerimg').attr('src', 'img/field.bmp');
-    setTimeout(function(){new Audio('sounds/cow.wav').play();}, 1500);
-    new Audio('sounds/sheep.wav').play();
+    let introCow = new Audio('sounds/cow.wav');
+    let introSheep = new Audio('sounds/sheep.wav');
+    introCow.volume = 0.1;
+    introSheep.volume = 0.1;
+    setTimeout(function(){introCow.play();}, 1500);
+    introSheep.play();
     $('#fullscreen').click(function() {
       $('#fullscreen').unbind('click');
       showItem(i);
