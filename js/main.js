@@ -67,12 +67,12 @@ function commonFinish() {
 
 function ulozBody(subtest, body) {
   const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
-  localStorage[key] = body;
+  localStorage[key] = body + "_" + currentDate();
 }
 
 function ulozBodyPreUlohu(subtest, uloha, body) {
   const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, uloha].join('_');
-  localStorage[key] = body;
+  localStorage[key] = body + "_" + currentDate();
 }
 
 let keyPressed = function(){};
@@ -644,7 +644,7 @@ $('#vysledkybutton').click(function(){
     if (fields.length === 5) {
       const client = fields.slice(1).join('_');
       rows[client] = rows[client] || {};
-      rows[client][fields[0]] = localStorage[key];
+      rows[client][fields[0]] = localStorage[key].split('_')[0];
     }
   }
   console.log(rows);
@@ -662,4 +662,12 @@ $('#vysledkybutton').click(function(){
 
 function vysledokHtml(vysledky, subtest) {
   return '<td>' + (vysledky[subtest] || '') + '</td>';
+}
+
+function currentDate() {
+  const date = new Date();
+  const dd = ("0" + (date.getDate()).toString()).slice(-2);
+  const mm = ("0" + (date.getMonth()+1).toString()).slice(-2);
+  const yy = date.getFullYear().toString().slice(2);
+  return yy + mm + dd;
 }
