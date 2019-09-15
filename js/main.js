@@ -81,7 +81,7 @@ let keyPressed = function(){};
 
 let showItem = function(){};
 
-let baseUrl = 'http://192.168.22.102:3000/';
+let baseUrl = 'https://peps-db.herokuapp.com/';
 
 let currentTask = 0;
 
