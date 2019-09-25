@@ -1,7 +1,7 @@
 function showOnly(id) {
   if (id === 'menu') {
     $('.menuitem').each(function(i,e){
-      let key = [$(e).attr('subtest'), localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
+      let key = [$(e).attr('subtest'), localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
       $(e).toggleClass('done', localStorage[key] !== undefined);
     });
     $('#menu').show();
@@ -67,13 +67,13 @@ function commonFinish() {
 }
 
 function ulozBody(subtest, body) {
-  const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
+  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
   localStorage[key] = body + "_" + currentDate();
   $('#uploadbutton').css('background-color', '');
 }
 
 function ulozBodyPreUlohu(subtest, uloha, body) {
-  const key = [subtest, localStorage.rodnecislo, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, uloha].join('_');
+  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, uloha].join('_');
   localStorage[key] = body + "_" + currentDate();
 }
 
@@ -649,8 +649,8 @@ $('#priezvisko').keyup(function(){
   localStorage.priezvisko = this.value;
   showOnly('menu');
 });
-$('#rodnecislo').keyup(function(){
-  localStorage.rodnecislo = this.value;
+$('#pocetmesiacov').keyup(function(){
+  localStorage.pocetmesiacov = this.value;
   showOnly('menu');
 });
 $('input[name=pohlavie]').change(function(){
