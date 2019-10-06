@@ -25,6 +25,9 @@
         <input type="text" id="pocetmesiacov" placeholder="Počet mesiacov" />
         <input type="radio" id="muz" name="pohlavie" type="radio" />M
         <input type="radio" id="zena" name="pohlavie" />F
+        <input type="text" id="l2" placeholder="L2 (žiadne)" list="l2s">
+        <datalist id="l2s">
+        </datalist>
       </th></th></tr></thead>
       <tbody>
       <tr><th colspan="2">Turn-end</th></tr>
@@ -43,6 +46,7 @@
         <span id="vysledkybutton">Výsledky</span>
         <span id="uploadbutton">Upload</span>
         <span id="downloadbutton">Download</span>
+        <span id="downloadl2button">Download zoznam L2</span>
       </td></tr>
       </tbody>
     </table>
@@ -66,9 +70,9 @@
   </div>
   <div id="vysledky" style="display: none;">
     <table border="1" cellpadding="4" cellspacing="0">
-      <thead><tr><th>Počet mesiacov</th><th>Meno</th><th>Priezvisko</th><th>Pohlavie</th><th>F</th><th>G</th><th>H</th><th>I</th><th>P</th><th>Q</th></tr></thead>
+      <thead><tr><th>Počet mesiacov</th><th>Meno</th><th>Priezvisko</th><th>Pohlavie</th><th>L2</th><th>F</th><th>G</th><th>H</th><th>I</th><th>P</th><th>Q</th></tr></thead>
       <tbody>
-      </tbody>
+      </tbody>1
     </table>
   </div>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>

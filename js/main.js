@@ -1,7 +1,7 @@
 function showOnly(id) {
   if (id === 'menu') {
     $('.menuitem').each(function(i,e){
-      let key = [$(e).attr('subtest'), localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
+      let key = [$(e).attr('subtest'), localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, localStorage.l2].join('_');
       $(e).toggleClass('done', localStorage[key] !== undefined);
     });
     $('#menu').show();
@@ -67,13 +67,13 @@ function commonFinish() {
 }
 
 function ulozBody(subtest, body) {
-  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie].join('_');
+  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, localStorage.l2].join('_');
   localStorage[key] = body + "_" + currentDate();
   $('#uploadbutton').css('background-color', '');
 }
 
 function ulozBodyPreUlohu(subtest, uloha, body) {
-  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, uloha].join('_');
+  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, localStorage.l2, uloha].join('_');
   localStorage[key] = body + "_" + currentDate();
 }
 
@@ -593,12 +593,16 @@ function q() {
 }
 
 $(document).ready(function(){
+  // Prefill all inputs with according to localStorage.
+  // Id of input element is taken as the key to localStorage.
   $('input[type=text]').each(function() {
     $(this).val(localStorage[this.id]);
   });
+  // Prefill pohlavie checkbox according to localStorage
   if (['muz', 'zena'].includes(localStorage.pohlavie)) {
     $('#' + localStorage.pohlavie).attr('checked', true);
   }
+  // On click select all text in the input
   $('input[type=text]').click(function(){
     this.setSelectionRange(0, this.value.length);
   });
@@ -657,11 +661,15 @@ $('input[name=pohlavie]').change(function(){
   localStorage.pohlavie = this.id;
   showOnly('menu');
 });
+$('#l2').change(function(){
+  localStorage.l2 = this.value;
+  showOnly('menu');
+});
 $('#vysledkybutton').click(function(){
   let rows = {};
   for (const key in localStorage) {
     const fields = key.split('_');
-    if (fields.length === 5) {
+    if (fields.length === 6) {
       const client = fields.slice(1).join('_');
       rows[client] = rows[client] || {};
       rows[client][fields[0]] = localStorage[key].split('_')[0];
@@ -710,6 +718,29 @@ $('#downloadbutton').click(function(){
     $('#downloadbutton').css('background-color', 'greenyellow');
   });
 });
+
+$('#downloadl2button').click(function(){
+  const url = baseUrl + 'api/download_l2s';
+  console.log('Downloading l2s from ' + url);
+  fetch(url).then(r => r.json()).then(function(json) {
+    localStorage.l2s = json['l2s'];
+    updateL2s();
+    $('#downloadl2button').css('background-color', 'greenyellow');
+  });
+});
+
+// From localStorage to HTML datalist element
+function updateL2s() {
+  if (localStorage.l2s) {
+    $('#l2s').empty();
+    for (let l2nazov of localStorage.l2s.split(',')) {
+      console.log(l2nazov);
+      $('#l2s').append($("<option>").text(l2nazov));
+    }
+  }
+}
+
+updateL2s();
 
 function currentDate() {
   const date = new Date();
