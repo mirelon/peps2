@@ -75,6 +75,43 @@ input#rodnecislo {
   right: 0;
 }
 
+#triangleup {
+  height: 50%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding-top: 50px;
+  z-index: 1;
+}
+
+#triangleup div.animated {
+  -webkit-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+#triangleup div.animate {
+  top: 150%;
+  opacity: 0;
+  transform: scale(0.5);
+}
+#triangleup div.side1 {
+  left: 10%;
+}
+#triangleup div.side2 {
+  left: 90%;
+}
+
+.trianglebottom {
+  height: 50%;
+  width: 50%;
+  position: fixed;
+  bottom: 0;
+  padding-top: 50px;
+}
+
 /* If you want the content centered horizontally and vertically */
 .centered {
   position: absolute;

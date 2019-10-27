@@ -18,6 +18,11 @@ function showOnly(id) {
   } else {
     $('#splitscreen').hide();
   }
+  if (id === 'trianglescreen') {
+    $('#trianglescreen').show();
+  } else {
+    $('#trianglescreen').hide();
+  }
   $('#vysledky').hide();
 }
 
@@ -343,35 +348,49 @@ function i() {
     {'item': 'cream'}
   ];
 
-  $('.left').css('background-image', 'radial-gradient(red, red, red, yellow, lightgreen)');
-  $('.right').css('background-image', 'radial-gradient(red, red, red, maroon, black)');
+  // https://jonsuh.com/blog/detect-the-end-of-css-animations-and-transitions-with-javascript/
+  function whichTransitionEvent(){
+    var t,
+      el = document.createElement("fakeelement");
+
+    var transitions = {
+      "transition"      : "transitionend",
+      "OTransition"     : "oTransitionEnd",
+      "MozTransition"   : "transitionend",
+      "WebkitTransition": "webkitTransitionEnd"
+    }
+
+    for (t in transitions){
+      if (el.style[t] !== undefined){
+        return transitions[t];
+      }
+    }
+  }
+  const transitionEvent = whichTransitionEvent();
+  console.log(transitionEvent);
+
+  // $('.left').css('background-image', 'radial-gradient(red, red, red, yellow, lightgreen)');
+  // $('.right').css('background-image', 'radial-gradient(red, red, red, maroon, black)');
 
   function image(item) {
-    return 'img/' + item + '.bmp';
+    return 'img/' + item + '.png';
   }
 
   showItem = function() {
-    $('#centerimg').attr('src', image(items[currentTask].item));
-    $('#fullscreen').click(showLikeOrNot);
-    showOnly('fullscreen');
-  }
-
-  function showLikeOrNot() {
-    $('#leftimg').attr('src', 'img/likes.bmp');
-    $('#rightimg').attr('src', 'img/doesnt.bmp');
-    $('#splitleft').unbind('click').click(function(){
-      console.log('#splitleft click');
+    $('#triangleup img').attr('src', image(items[currentTask].item));
+    $('#triangleleft img').unbind('click').click(function(){
+      console.log('#triangleleft click');
       sideClicked(1);
     });
-    $('#splitright').unbind('click').click(function(){
-      console.log('#splitright click');
+    $('#triangleright img').unbind('click').click(function(){
+      console.log('#triangleright click');
       sideClicked(2);
     });
     keyPressed = function(key) {
       result.tester = key;
       judge();
     };
-    showOnly('splitscreen');
+    showOnly('trianglescreen');
   }
 
   function start() {
@@ -385,6 +404,8 @@ function i() {
 
   function judge() {
     if (result.tester !== null && result.client !== null) {
+      const animatedClone = $('.animated').clone();
+      $('.animated').addClass('animate side'+result.tester);
       console.log(result.tester, result.client);
       const correct = result.tester === result.client;
       if (!items[currentTask].practice && !items[currentTask].example && correct) {
@@ -396,12 +417,16 @@ function i() {
         client: null
       };
       debugMessage(currentTask, correct, body);
-      currentTask += 1;
-      if (items[currentTask]) {
-        showItem(currentTask);
-      } else {
-        outtro('I', body);
-      }
+      $('.animated').one(transitionEvent, function() {
+        $('.animated').remove();
+        animatedClone.appendTo('#triangleup');
+        currentTask += 1;
+        if (items[currentTask]) {
+          showItem(currentTask);
+        } else {
+          outtro('I', body);
+        }
+      });
     }
   }
 
