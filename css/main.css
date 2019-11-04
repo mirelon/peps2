@@ -123,7 +123,11 @@ input#rodnecislo {
 
 /* Style the image inside the centered container, if needed */
 .centered img {
-  /*width: 150px;*/
+  height: 250px;
+}
+
+.centered #questionmark {
+  font-size: 250px;
 }
 
 .buttons span {

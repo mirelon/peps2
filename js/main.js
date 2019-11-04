@@ -76,6 +76,7 @@ function quitToMenu() {
   $('#fullscreen').unbind('click');
   $('#splitleft').unbind('click');
   $('#splitright').unbind('click');
+  $('#questionmark').remove();
   clearTimeout(currentTimeout);
   keyPressed = function(){};
   showItem = function(){};
@@ -178,48 +179,48 @@ function g() {
   let body = 0;
 
   const items = [
-    {'item': 'qhranolky', 'example': true},
-    {'item': 'ttea',      'example': true},
-    {'item': 'tmilk',     'practice': true},
-    {'item': 'qsalad',    'practice': true},
-    {'item': 'book1'},
-    {'item': 'plate1'},
-    {'item': 'book2'},
-    {'item': 'plate2'},
-    {'item': 'book3'},
-    {'item': 'plate3'},
-    {'item': 'book4'},
-    {'item': 'plate4'},
-    {'item': 'book5'},
-    {'item': 'plate5'},
-    {'item': 'book6'},
-    {'item': 'plate6'},
-    {'item': 'book7'},
-    {'item': 'plate7'},
-    {'item': 'book8'},
-    {'item': 'plate8'}
+    {'item': 'hranolky', 'question': true, 'example': true},
+    {'item': 'caj', 'question': false,      'example': true},
+    {'item': 'mlieko', 'question': false,   'practice': true},
+    {'item': 'salat', 'question': true,    'practice': true},
+    {'item': 'smotana', 'question': false},
+    {'item': 'jablko', 'question': false},
+    {'item': 'smotana', 'question': true},
+    {'item': 'jablko', 'question': true},
+    {'item': 'nanuk', 'question': false},
+    {'item': 'kolac', 'question': false},
+    {'item': 'nanuk', 'question': true},
+    {'item': 'kolac', 'question': true},
+    {'item': 'med', 'question': false},
+    {'item': 'syr', 'question': false},
+    {'item': 'med', 'question': true},
+    {'item': 'syr', 'question': true},
+    {'item': 'kecup', 'question': false},
+    {'item': 'dzem', 'question': false},
+    {'item': 'kecup', 'question': true},
+    {'item': 'dzem', 'question': true}
   ];
 
   function image(item) {
-    return 'img/' + item + '.bmp';
+    return 'img/' + item + '.png';
   }
 
   showItem = function() {
     $('#centerimg').attr('src', image(items[currentTask].item));
+    $('#questionmark').text(items[currentTask].question ? '?' : '');
     showOnly('fullscreen');
   }
 
   function start() {
+    $('#fullscreen .centered').append('<span id="questionmark"></span>');
     showItem(currentTask);
   }
 
   keyPressed = function(key) {
-    // 1,2,4,5,8,9,12,13 - oznam
-    // 0,3,6,7,10,11,14,15 - otazka
-    const oznam = [1,2,4,5,8,9,12,13,16,17].includes(currentTask);
-    console.log(oznam);
+    const question = items[currentTask].question
+    console.log(question);
     console.log(key);
-    const correct = (key===1 && oznam) || (key===2 && !oznam);
+    const correct = (key===1 && !question) || (key===2 && question);
     if (!items[currentTask].practice && !items[currentTask].example && correct) {
       body += 1;
     }
