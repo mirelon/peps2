@@ -72,11 +72,6 @@ function ulozBody(subtest, body) {
   $('#uploadbutton').css('background-color', '');
 }
 
-function ulozBodyPreUlohu(subtest, uloha, body) {
-  const key = [subtest, localStorage.pocetmesiacov, localStorage.meno, localStorage.priezvisko, localStorage.pohlavie, localStorage.l2, uloha].join('_');
-  localStorage[key] = body + "_" + currentDate();
-}
-
 let keyPressed = function(){};
 
 let showItem = function(){};
@@ -153,7 +148,6 @@ function f() {
 
   function sideClicked(side) {
     const correct = isCorrect(items[currentTask], side, function(){body += 1;});
-    ulozBodyPreUlohu('F', currentTask, correct ? 1 : 0);
     debugMessage(currentTask, correct, body);
     currentTask += 1;
     if (items[currentTask]) {
@@ -223,7 +217,6 @@ function g() {
     if (!items[currentTask].practice && !items[currentTask].example && correct) {
       body += 1;
     }
-    ulozBodyPreUlohu('G', currentTask, correct ? 1 : 0)
     debugMessage(currentTask, correct, body);
     currentTask += 1;
     if (items[currentTask]) {
@@ -309,7 +302,6 @@ function h() {
 
   function sideClicked(side) {
     const correct = isCorrect(items[currentTask], side, function(){body += 1;});
-    ulozBodyPreUlohu('H', currentTask, correct ? 1 : 0);
     debugMessage(currentTask, correct, body);
     currentTask += 1;
     if (items[currentTask]) {
@@ -412,7 +404,6 @@ function i() {
         tester: null,
         client: null
       };
-      ulozBodyPreUlohu('I', currentTask, correct ? 1 : 0);
       debugMessage(currentTask, correct, body);
       currentTask += 1;
       if (items[currentTask]) {
@@ -491,7 +482,6 @@ function p() {
 
   function sideClicked(side) {
     let correct = isCorrect(items[currentTask], side, function(){body += 1;});
-    ulozBodyPreUlohu('P', currentTask, correct);
     debugMessage(currentTask, correct, body);
     currentTask += 1;
     if (items[currentTask]) {
@@ -578,7 +568,6 @@ function q() {
     if (!items[currentTask].practice && !items[currentTask].example && correct) {
       body += 1;
     }
-    ulozBodyPreUlohu('Q', currentTask, correct ? 1 : 0);
     debugMessage(currentTask, correct, body);
     currentTask += 1;
     if (items[currentTask]) {
