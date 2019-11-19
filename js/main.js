@@ -53,7 +53,18 @@ const timeout = { // in milliseconds
 
 let currentTimeout;
 
-function commonFinish() {
+function outtro(subtest, body) {
+  $('#centerimg').attr('src', 'img/outtro.png');
+  showOnly('fullscreen');
+  keyPressed = function(key) {
+    if (key == 1) {
+      ulozBody(subtest, body);
+    }
+    quitToMenu();
+  };
+}
+
+function quitToMenu() {
   $('.left').css('background-image', '');
   $('.right').css('background-image', '');
   $('#centerimg').unbind('click');
@@ -128,11 +139,6 @@ function f() {
     // setTimeout(function(){}, timeout['f']);
   }
 
-  function finish() {
-    ulozBody('F', body);
-    commonFinish();
-  }
-
   function start() {
     showItem(currentTask);
   }
@@ -153,7 +159,7 @@ function f() {
     if (items[currentTask]) {
       showItem(currentTask);
     } else {
-      finish();
+      outtro('F', body);
     }
   }
 
@@ -198,11 +204,6 @@ function g() {
     showOnly('fullscreen');
   }
 
-  function finish() {
-    ulozBody('G', body);
-    commonFinish();
-  }
-
   function start() {
     showItem(currentTask);
   }
@@ -222,7 +223,7 @@ function g() {
     if (items[currentTask]) {
       showItem(currentTask);
     } else {
-      finish();
+      outtro('G', body);
     }
   };
 
@@ -282,11 +283,6 @@ function h() {
     showOnly('splitscreen');
   }
 
-  function finish() {
-    ulozBody('H', body);
-    commonFinish();
-  }
-
   function start() {
     showItem(currentTask);
   }
@@ -307,7 +303,7 @@ function h() {
     if (items[currentTask]) {
       showItem(currentTask);
     } else {
-      finish();
+      outtro('H', body);
     }
   }
 
@@ -378,11 +374,6 @@ function i() {
     showOnly('splitscreen');
   }
 
-  function finish() {
-    ulozBody('I', body);
-    commonFinish();
-  }
-
   function start() {
     showItem(currentTask);
   }
@@ -409,7 +400,7 @@ function i() {
       if (items[currentTask]) {
         showItem(currentTask);
       } else {
-        finish();
+        outtro('I', body);
       }
     }
   }
@@ -462,11 +453,6 @@ function p() {
     // setTimeout(function(){}, timeout['p']);
   }
 
-  function finish() {
-    ulozBody('P', body);
-    commonFinish();
-  }
-
   function start() {
     showItem(currentTask);
   }
@@ -487,7 +473,7 @@ function p() {
     if (items[currentTask]) {
       showItem(currentTask);
     } else {
-      finish();
+      outtro('P', body);
     }
   }
 
@@ -540,11 +526,6 @@ function q() {
     showOnly('fullscreen');
   }
 
-  function finish() {
-    ulozBody('Q', body);
-    commonFinish();
-  }
-
   function start() {
     $('#centerimg').attr('src', 'img/field.bmp');
     let introCow = new Audio('sounds/cow.wav');
@@ -573,7 +554,7 @@ function q() {
     if (items[currentTask]) {
       showItem(currentTask);
     } else {
-      finish();
+      outtro('Q', body);
     }
   };
 
@@ -615,7 +596,7 @@ document.onkeydown = function(evt) {
     isThree = ([51, 99].includes(evt.keyCode));
   }
   if (isEscape) {
-    commonFinish();
+    quitToMenu();
   }
   if (isBackspace) {
     if (currentTask > 0) {
