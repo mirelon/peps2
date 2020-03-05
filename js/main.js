@@ -74,6 +74,9 @@ function quitToMenu() {
   $('.right').css('background-image', '');
   $('#centerimg').unbind('click');
   $('#fullscreen').unbind('click');
+  $('.split').removeClass('ihrisko');
+  $('#leftimg').removeClass('sloptou');
+  $('#rightimg').removeClass('flipped');
   $('#splitleft').unbind('click');
   $('#splitright').unbind('click');
   $('#questionmark').remove();
@@ -513,33 +516,30 @@ function q() {
   let body = 0;
 
   const items = [
-    {'item': 'green cow',   'sound': 'green sheep', 'example': true},
-    {'item': 'green sheep', 'sound': 'red sheep',   'example': true},
-    {'item': 'green cow',   'sound': 'black cow',   'practice': true},
-    {'item': 'green sheep', 'sound': 'green cow',   'practice': true},
-    {'item': 'focus1',     'sound': 'focus1'},
-    {'item': 'focus2',     'sound': 'focus2'},
-    {'item': 'focus3',     'sound': 'focus3'},
-    {'item': 'focus4',     'sound': 'focus4'},
-    {'item': 'focus5',     'sound': 'focus5'},
-    {'item': 'focus6',     'sound': 'focus6'},
-    {'item': 'focus7',     'sound': 'focus7'},
-    {'item': 'focus8',     'sound': 'focus8'},
-    {'item': 'focus9',     'sound': 'focus9'},
-    {'item': 'focus10',    'sound': 'focus10'},
-    {'item': 'focus11',    'sound': 'focus11'},
-    {'item': 'focus12',    'sound': 'focus12'},
-    {'item': 'focus13',    'sound': 'focus13'},
-    {'item': 'focus14',    'sound': 'focus14'},
-    {'item': 'focus15',    'sound': 'focus15'},
-    {'item': 'focus16',    'sound': 'focus16'}
+    {'left': 'krava_zelena',  'right': 'ovca_zelena',   'sound': 'green sheep', 'example': true},
+    {'left': 'ovca_zelena',   'right': 'ovca_cervena',  'sound': 'red sheep',   'example': true},
+    {'left': 'krava_zelena',  'right': 'krava_cierna',  'sound': 'black cow',   'practice': true},
+    {'left': 'ovca_zelena',   'right': 'krava_zelena',  'sound': 'green cow',   'practice': true},
+    {'left': 'krava_biela',   'right': 'krava_zelena',  'sound': 'focus1'},
+    {'left': 'krava_modra',   'right': 'ovca_modra',    'sound': 'focus2'},
+    {'left': 'ovca_modra',    'right': 'ovca_zelena',   'sound': 'focus3'},
+    {'left': 'krava_biela',   'right': 'ovca_biela',    'sound': 'focus4'},
+    {'left': 'ovca_cierna',   'right': 'ovca_biela',    'sound': 'focus5'},
+    {'left': 'ovca_biela',    'right': 'krava_biela',   'sound': 'focus6'},
+    {'left': 'krava_cervena', 'right': 'krava_biela',   'sound': 'focus7'},
+    {'left': 'krava_cervena', 'right': 'ovca_cervena',  'sound': 'focus8'},
+    {'left': 'ovca_biela',    'right': 'ovca_modra',    'sound': 'focus9'},
+    {'left': 'ovca_cervena',  'right': 'krava_cervena', 'sound': 'focus10'},
+    {'left': 'krava_cierna',  'right': 'krava_modra',   'sound': 'focus11'},
+    {'left': 'ovca_modra',    'right': 'krava_modra',   'sound': 'focus12'},
+    {'left': 'ovca_cervena',  'right': 'ovca_cierna',   'sound': 'focus13'},
+    {'left': 'ovca_cierna',   'right': 'krava_cierna',  'sound': 'focus14'},
+    {'left': 'krava_modra',   'right': 'krava_cervena', 'sound': 'focus15'},
+    {'left': 'krava_cierna',  'right': 'ovca_cierna',   'sound': 'focus16'}
   ];
 
-  $('.left').css('background-image', 'radial-gradient(red, red, red, yellow, lightgreen)');
-  $('.right').css('background-image', 'radial-gradient(red, red, red, maroon, black)');
-
   function image(item) {
-    return 'img/' + item + '.bmp';
+    return 'img/' + item + '.png';
   }
 
   function sound(item) {
@@ -547,9 +547,11 @@ function q() {
   }
 
   showItem = function() {
-    $('#centerimg').attr('src', image(items[currentTask].item));
+    $('.split').addClass('ihrisko')
+    $('#leftimg').attr('src', image(items[currentTask].left)).addClass('sloptou');
+    $('#rightimg').attr('src', image(items[currentTask].right)).addClass('flipped');
     new Audio(sound(items[currentTask].sound)).play();
-    showOnly('fullscreen');
+    showOnly('splitscreen');
   }
 
   function start() {

@@ -51,6 +51,21 @@ input#rodnecislo {
   position: fixed;
 }
 
+.ihrisko {
+  background: linear-gradient(lightblue 50%, lightgreen 50%);
+}
+
+.sloptou {
+  background-image: url('../img/lopta.png');
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+
+.flipped {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 /**
   SPLIT SCREEN
  */
