@@ -119,6 +119,11 @@ input#rodnecislo {
   left: 90%;
 }
 
+#i_intro_screen img {
+  width: 20%;
+  height: 20%;
+}
+
 .trianglebottom {
   height: 50%;
   width: 50%;
@@ -143,6 +148,10 @@ input#rodnecislo {
 
 .centered #questionmark {
   font-size: 250px;
+}
+
+#centerimg {
+  display: block;
 }
 
 .buttons span {
